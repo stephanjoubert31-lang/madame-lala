@@ -22,9 +22,9 @@ export default function Hero() {
         <Image
           src="/LOGOMADAMELALA.PNG"
           alt="Madame Lala"
-          width={520}
+          width={650}
           height={0}
-          style={{ width: "min(520px, 90vw)", height: "auto" }}
+          style={{ width: "min(650px, 90%)", height: "auto" }}
           priority
         />
 
