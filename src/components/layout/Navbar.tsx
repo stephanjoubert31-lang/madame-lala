@@ -30,38 +30,41 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex flex-col items-center gap-[3px] transition-colors"
-          style={{ textDecoration: "none" }}
-        >
+        {/* Logo texte + signature */}
+        <Link href="/" className="flex flex-col items-center gap-[4px]" style={{ textDecoration: "none", height: "45px", justifyContent: "center" }}>
+          {/* MADAME LALA */}
           <span
-            className={`font-garamond text-xl tracking-[0.2em] uppercase font-medium transition-colors leading-none ${
-              scrolled ? "text-[#3D1F0D]" : "text-[#FAF7F0]"
-            }`}
-            style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: "1.15rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              fontWeight: 400,
+              lineHeight: 1,
+              color: scrolled ? "#3D1F0D" : "#C9A84C",
+              transition: "color 0.5s",
+            }}
           >
             Madame Lala
           </span>
-          {/* Signature : ligne — baobab 12px — ligne, même couleur que le texte */}
+          {/* Signature : ligne — baobab — ligne */}
           <span className="flex items-center gap-[5px]">
-            <span style={{ display: "block", width: "22px", height: "1px", backgroundColor: scrolled ? "#3D1F0D" : "#FAF7F0" }} />
-            <svg viewBox="0 0 100 120" width="12" height="14" fill={scrolled ? "#3D1F0D" : "#FAF7F0"}>
+            <span style={{ display: "block", width: "20px", height: "1px", backgroundColor: scrolled ? "#3D1F0D" : "#C9A84C", transition: "background-color 0.5s" }} />
+            <svg viewBox="0 0 100 120" width="12" height="14" fill={scrolled ? "#3D1F0D" : "#C9A84C"} style={{ transition: "fill 0.5s" }}>
               <path d="M38 110 Q35 80 30 60 Q25 40 35 30 Q50 22 65 30 Q75 40 70 60 Q65 80 62 110 Z" />
-              <line x1="50" y1="30" x2="20" y2="10" stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="3" />
-              <line x1="50" y1="30" x2="80" y2="10" stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="3" />
-              <line x1="50" y1="30" x2="50" y2="5"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="3" />
-              <line x1="50" y1="30" x2="15" y2="25" stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="2" />
-              <line x1="50" y1="30" x2="85" y2="25" stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="2" />
-              <line x1="20" y1="10" x2="10" y2="3"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
-              <line x1="20" y1="10" x2="25" y2="2"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
-              <line x1="80" y1="10" x2="75" y2="2"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
-              <line x1="80" y1="10" x2="90" y2="3"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
-              <line x1="50" y1="5"  x2="44" y2="0"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
-              <line x1="50" y1="5"  x2="56" y2="0"  stroke={scrolled ? "#3D1F0D" : "#FAF7F0"} strokeWidth="1.5" />
+              <line x1="50" y1="30" x2="20" y2="10" stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="3" style={{ transition: "stroke 0.5s" }} />
+              <line x1="50" y1="30" x2="80" y2="10" stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="3" />
+              <line x1="50" y1="30" x2="50" y2="5"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="3" />
+              <line x1="50" y1="30" x2="15" y2="25" stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="2" />
+              <line x1="50" y1="30" x2="85" y2="25" stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="2" />
+              <line x1="20" y1="10" x2="10" y2="3"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
+              <line x1="20" y1="10" x2="25" y2="2"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
+              <line x1="80" y1="10" x2="75" y2="2"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
+              <line x1="80" y1="10" x2="90" y2="3"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
+              <line x1="50" y1="5"  x2="44" y2="0"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
+              <line x1="50" y1="5"  x2="56" y2="0"  stroke={scrolled ? "#3D1F0D" : "#C9A84C"} strokeWidth="1.5" />
             </svg>
-            <span style={{ display: "block", width: "22px", height: "1px", backgroundColor: scrolled ? "#3D1F0D" : "#FAF7F0" }} />
+            <span style={{ display: "block", width: "20px", height: "1px", backgroundColor: scrolled ? "#3D1F0D" : "#C9A84C", transition: "background-color 0.5s" }} />
           </span>
         </Link>
 

@@ -1,26 +1,5 @@
 import Link from "next/link";
-
-function BaobabIcon() {
-  return (
-    <svg viewBox="0 0 100 120" width="40" height="48" fill="#C9A84C">
-      {/* Tronc large et renflé */}
-      <path d="M38 110 Q35 80 30 60 Q25 40 35 30 Q50 22 65 30 Q75 40 70 60 Q65 80 62 110 Z" />
-      {/* Branches principales */}
-      <line x1="50" y1="30" x2="20" y2="10" stroke="#C9A84C" strokeWidth="3" />
-      <line x1="50" y1="30" x2="80" y2="10" stroke="#C9A84C" strokeWidth="3" />
-      <line x1="50" y1="30" x2="50" y2="5"  stroke="#C9A84C" strokeWidth="3" />
-      <line x1="50" y1="30" x2="15" y2="25" stroke="#C9A84C" strokeWidth="2" />
-      <line x1="50" y1="30" x2="85" y2="25" stroke="#C9A84C" strokeWidth="2" />
-      {/* Petites branches */}
-      <line x1="20" y1="10" x2="10" y2="3"  stroke="#C9A84C" strokeWidth="1.5" />
-      <line x1="20" y1="10" x2="25" y2="2"  stroke="#C9A84C" strokeWidth="1.5" />
-      <line x1="80" y1="10" x2="75" y2="2"  stroke="#C9A84C" strokeWidth="1.5" />
-      <line x1="80" y1="10" x2="90" y2="3"  stroke="#C9A84C" strokeWidth="1.5" />
-      <line x1="50" y1="5"  x2="44" y2="0"  stroke="#C9A84C" strokeWidth="1.5" />
-      <line x1="50" y1="5"  x2="56" y2="0"  stroke="#C9A84C" strokeWidth="1.5" />
-    </svg>
-  );
-}
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -39,45 +18,17 @@ export default function Hero() {
       ═══════════════════════════════ */}
       <div className="relative z-[3] flex flex-col items-center text-center px-6">
 
-        {/* 1 — MADAME LALA */}
-        <h1
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "clamp(3.2rem, 8vw, 6rem)",
-            letterSpacing: "0.22em",
-            color: "#C9A84C",
-            fontWeight: 400,
-            lineHeight: 1,
-            textTransform: "uppercase",
-            margin: 0,
-          }}
-        >
-          Madame Lala
-        </h1>
+        {/* Logo image — remplace titre + séparateur + "Made in Madagascar" */}
+        <Image
+          src="/LOGOMADAMELALA.PNG"
+          alt="Madame Lala"
+          width={520}
+          height={0}
+          style={{ width: "min(520px, 90vw)", height: "auto" }}
+          priority
+        />
 
-        {/* 2 — Séparateur : ligne — baobab — ligne */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "18px" }}>
-          <div style={{ width: "80px", height: "1px", background: "linear-gradient(to left, #C9A84C, rgba(201,168,76,0.3))" }} />
-          <BaobabIcon />
-          <div style={{ width: "80px", height: "1px", background: "linear-gradient(to right, #C9A84C, rgba(201,168,76,0.3))" }} />
-        </div>
-
-        {/* 3 — MADE IN MADAGASCAR */}
-        <p
-          style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "0.7rem",
-            letterSpacing: "0.35em",
-            color: "#B09050",
-            textTransform: "uppercase",
-            marginTop: "14px",
-            fontWeight: 400,
-          }}
-        >
-          Made in Madagascar
-        </p>
-
-        {/* 4 — Sous-titre */}
+        {/* Sous-titre */}
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
@@ -86,7 +37,7 @@ export default function Hero() {
             fontWeight: 300,
             lineHeight: 1.8,
             maxWidth: "30rem",
-            marginTop: "40px",
+            marginTop: "32px",
             letterSpacing: "0.02em",
           }}
         >
