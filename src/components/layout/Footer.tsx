@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 export default function Footer() {
   return (
@@ -20,11 +21,14 @@ export default function Footer() {
               Sacs en raphia artisanal, tissés à Madagascar par des artisanes d&apos;exception.
             </p>
             <div className="flex gap-4 mt-2">
-              <a href="https://instagram.com" aria-label="Instagram" className="text-[#FAF7F0]/60 hover:text-[#C9A84C] transition-colors text-xs tracking-widest uppercase" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Instagram
-              </a>
-              <a href="https://facebook.com" aria-label="Facebook" className="text-[#FAF7F0]/60 hover:text-[#C9A84C] transition-colors text-xs tracking-widest uppercase" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                Facebook
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram Madame Lala"
+                className="opacity-70 hover:opacity-100 transition-opacity"
+              >
+                <InstagramIcon size={22} color="#C9A84C" />
               </a>
             </div>
           </div>
