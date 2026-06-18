@@ -8,13 +8,20 @@ import { urlFor } from "@/sanity/lib/image";
 import { getProduct, getSuggested, products as localProducts } from "@/data/products";
 import ProductGallery from "@/components/sections/ProductGallery";
 
-/* ── Génère les slugs statiques (Sanity + fallback local) ── */
+/* ── Génère les slugs statiques ──
+   Toujours inclure les 4 slugs locaux comme base garantie,
+   plus tout slug Sanity supplémentaire éventuel.
+─────────────────────────────────────────────────────── */
 export async function generateStaticParams() {
+  // Slugs locaux — toujours présents (base garantie)
+  const localSlugs = new Set(localProducts.map((p) => p.slug));
+
   try {
-    const sanityslugs = await getAllProductSlugs();
-    if (sanityslugs.length > 0) return sanityslugs.map((s) => ({ slug: s.slug }));
-  } catch { /* ignore */ }
-  return localProducts.map((p) => ({ slug: p.slug }));
+    const sanitySlugs = await getAllProductSlugs();
+    sanitySlugs.forEach((s) => localSlugs.add(s.slug));
+  } catch { /* Sanity inaccessible au build — slugs locaux suffisent */ }
+
+  return Array.from(localSlugs).map((slug) => ({ slug }));
 }
 
 /* ── Signature baobab ── */
@@ -44,46 +51,59 @@ function BaobabSignature() {
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
-  /* ── Tente Sanity, fallback local ── */
-  let nom: string, description: string, prix: number | null, stock: number;
-  let matieres: string, disponible: boolean, productId: string;
+  // ── 1. PRIORITÉ SANITY ──────────────────────────────────────
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let photos: any[] = [];
-  let suggestedItems: { nom: string; slug: string; tagline?: string; photos?: any[] }[] = [];
-
+  let sanityProduct: Awaited<ReturnType<typeof getProductBySlug>> = null;
   try {
-    const sanityProduct = await getProductBySlug(slug);
-    if (sanityProduct) {
-      nom = sanityProduct.nom;
-      description = sanityProduct.description;
-      prix = sanityProduct.prix;
-      stock = sanityProduct.stock;
-      photos = sanityProduct.photos ?? [];
-      matieres = sanityProduct.matieres;
-      disponible = sanityProduct.disponible;
-      productId = sanityProduct._id;
-      const sugg = await getSuggestedProducts(productId);
-      suggestedItems = sugg.map((s) => ({ nom: s.nom, slug: s.slug.current, photos: s.photos }));
-    } else {
-      throw new Error("not in sanity");
-    }
+    sanityProduct = await getProductBySlug(slug);
   } catch {
-    /* Fallback données locales */
+    // Sanity inaccessible → on continue avec les données locales
+  }
+
+  // ── 2. DONNÉES RÉSOLUES (Sanity prime, local en fallback) ───
+  let nom: string;
+  let description: string;
+  let prix: number | null;
+  let stock: number;
+  let matieres: string;
+  let disponible: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let photos: any[];
+  let suggestedItems: { nom: string; slug: string; photos?: any[] }[];
+
+  if (sanityProduct) {
+    // ✅ Données Sanity — priorité absolue
+    nom        = sanityProduct.nom;
+    description = sanityProduct.description;
+    prix       = sanityProduct.prix;
+    stock      = sanityProduct.stock;
+    photos     = sanityProduct.photos ?? [];
+    matieres   = sanityProduct.matieres ?? "";
+    disponible = sanityProduct.disponible;
+
+    let sugg: Awaited<ReturnType<typeof getSuggestedProducts>> = [];
+    try { sugg = await getSuggestedProducts(sanityProduct._id); } catch { /* ignore */ }
+    suggestedItems = sugg.map((s) => ({ nom: s.nom, slug: s.slug.current, photos: s.photos }));
+
+  } else {
+    // ⚠️ Fallback données locales (Sanity vide ou inaccessible)
     const local = getProduct(slug);
     if (!local) notFound();
-    nom = local.name;
+    nom        = local.name;
     description = local.description;
-    prix = null;
-    stock = 0;
-    matieres = local.matieres.join(", ");
+    prix       = null;
+    stock      = 0;
+    photos     = [];
+    matieres   = local.matieres.join(", ");
     disponible = true;
-    productId = slug;
     suggestedItems = getSuggested(slug).map((s) => ({ nom: s.name, slug: s.slug }));
   }
 
   if (!disponible) notFound();
 
-  const localData = getProduct(slug); // pour details / dimensions
+  // Données locales complémentaires (détails, dimensions, tagline)
+  // utilisées même quand Sanity est la source principale
+  const localData = getProduct(slug);
 
   return (
     <>
