@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BackButton from "@/components/ui/BackButton";
 
 const valeurs = [
   {
@@ -22,8 +23,12 @@ export default function AProposPage() {
       <Navbar />
       <main className="min-h-screen bg-[#FAF7F0]">
 
+        <div className="px-6 md:px-10 pt-24 max-w-6xl mx-auto">
+          <BackButton />
+        </div>
+
         {/* ── Hero texte ── */}
-        <section className="pt-36 pb-20 px-6 text-center">
+        <section className="pt-4 pb-20 px-6 text-center">
           <div className="max-w-3xl mx-auto flex flex-col items-center gap-6">
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.72rem", letterSpacing: "0.45em", color: "#C9A84C", textTransform: "uppercase" }}>
               Notre histoire

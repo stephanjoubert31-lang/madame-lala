@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BackButton from "@/components/ui/BackButton";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
 
 export default function ContactPage() {
@@ -39,8 +40,9 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-[#FAF7F0] pt-36 pb-24 px-6">
+      <main className="min-h-screen bg-[#FAF7F0] pt-24 pb-24 px-6">
         <div className="max-w-xl mx-auto flex flex-col gap-12">
+          <BackButton />
 
           {/* Header */}
           <div className="flex flex-col items-center gap-4 text-center">

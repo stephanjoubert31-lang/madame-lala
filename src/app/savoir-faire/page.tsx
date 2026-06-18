@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BackButton from "@/components/ui/BackButton";
 
 const etapes = [
   {
@@ -38,8 +39,12 @@ export default function SavoirFairePage() {
       <Navbar />
       <main className="min-h-screen">
 
+        <div className="px-6 md:px-10 pt-24 max-w-7xl mx-auto">
+          <BackButton />
+        </div>
+
         {/* ── Hero pleine largeur ── */}
-        <section className="pt-20">
+        <section className="pt-4">
           <PhotoPlaceholder label="Artisanes au travail — Madagascar" aspect="aspect-[16/7]" />
           <div className="bg-[#FAF7F0] text-center py-14 px-6">
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.72rem", letterSpacing: "0.45em", color: "#C9A84C", textTransform: "uppercase" }}>
