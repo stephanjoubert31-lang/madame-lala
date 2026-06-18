@@ -3,27 +3,31 @@ import Link from "next/link";
 const products = [
   {
     id: 1,
-    name: "Le Baobab",
-    price: 285,
-    description: "Tote bag structuré en raphia naturel",
-    slug: "le-baobab",
+    name: "Le Tote Raphia",
+    description: "Grand tote structuré, tressage serré naturel, anses en cuir végétal.",
+    slug: "le-tote-raphia",
     color: "#5c3a1e",
   },
   {
     id: 2,
-    name: "La Vanille",
-    price: 320,
-    description: "Pochette baguette tressée à la main",
-    slug: "la-vanille",
+    name: "Le Hobo Tressé",
+    description: "Silhouette souple et enveloppante, motif croisé à la main.",
+    slug: "le-hobo-tresse",
     color: "#8B6914",
   },
   {
     id: 3,
-    name: "L'Ylang",
-    price: 195,
-    description: "Mini sac panier en raphia teinté",
-    slug: "lylang",
+    name: "Le Panier Structuré",
+    description: "Forme architecturale, fond rigide, raphia naturel non teint.",
+    slug: "le-panier-structure",
     color: "#3D1F0D",
+  },
+  {
+    id: 4,
+    name: "Le Grand Panier Évasé",
+    description: "Silhouette évasée généreuse, idéale pour les journées d'été.",
+    slug: "le-grand-panier-evase",
+    color: "#5c2e12",
   },
 ];
 
@@ -49,7 +53,7 @@ export default function FeaturedCollection() {
         </div>
 
         {/* Products grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
           {products.map((product) => (
             <Link
               key={product.id}
@@ -111,10 +115,10 @@ export default function FeaturedCollection() {
                   {product.description}
                 </p>
                 <p
-                  className="text-[#3D1F0D] text-lg font-medium mt-1"
+                  className="text-[#3D1F0D] text-sm tracking-[0.2em] uppercase mt-2"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                 >
-                  {product.price} €
+                  Prix sur demande
                 </p>
               </div>
             </Link>
