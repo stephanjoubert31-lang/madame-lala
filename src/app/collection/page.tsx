@@ -104,6 +104,18 @@ export default async function CollectionPage() {
       <main className="min-h-screen bg-[#FAF7F0] pt-28 pb-24">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
 
+          {/* ← Accueil */}
+          <div className="mb-8">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 hover:text-[#C9A84C] transition-colors duration-300"
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.85rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#3D1F0D", textDecoration: "none" }}
+            >
+              <span style={{ fontSize: "1rem" }}>←</span>
+              Accueil
+            </Link>
+          </div>
+
           <div className="text-center mb-16 flex flex-col items-center gap-4">
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.72rem", letterSpacing: "0.45em", color: "#C9A84C", textTransform: "uppercase" }}>
               Artisanat malgache
