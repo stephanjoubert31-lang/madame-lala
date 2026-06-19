@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { label: "Collection", href: "/collection" },
@@ -14,6 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { count } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -30,9 +32,8 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
-        {/* Logo texte + signature */}
+        {/* Logo */}
         <Link href="/" className="flex flex-col items-center gap-[4px]" style={{ textDecoration: "none", height: "45px", justifyContent: "center" }}>
-          {/* MADAME LALA */}
           <span
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -47,7 +48,6 @@ export default function Navbar() {
           >
             Madame Lala
           </span>
-          {/* Signature : ligne — baobab — ligne */}
           <span className="flex items-center gap-[5px]">
             <span style={{ display: "block", width: "20px", height: "1px", backgroundColor: scrolled ? "#3D1F0D" : "#C9A84C", transition: "background-color 0.5s" }} />
             <svg viewBox="0 0 100 120" width="12" height="14" fill={scrolled ? "#3D1F0D" : "#C9A84C"} style={{ transition: "fill 0.5s" }}>
@@ -74,7 +74,7 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`font-garamond text-sm tracking-widest uppercase transition-colors hover:text-[#C9A84C] ${
+                className={`text-sm tracking-widest uppercase transition-colors hover:text-[#C9A84C] ${
                   scrolled ? "text-[#1A1008]" : "text-[#FAF7F0]"
                 }`}
                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
@@ -87,13 +87,21 @@ export default function Navbar() {
 
         {/* Right icons */}
         <div className="flex items-center gap-4">
-          <Link href="/panier" aria-label="Panier">
+          <Link href="/checkout" aria-label="Panier" className="relative">
             <ShoppingBag
               size={22}
               className={`transition-colors hover:text-[#C9A84C] ${
                 scrolled ? "text-[#1A1008]" : "text-[#FAF7F0]"
               }`}
             />
+            {count > 0 && (
+              <span
+                className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-[#C9A84C] text-[#1A1008] text-[10px] flex items-center justify-center font-medium"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                {count > 9 ? "9+" : count}
+              </span>
+            )}
           </Link>
           <button
             className="md:hidden"
@@ -117,7 +125,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="font-garamond text-lg tracking-widest uppercase text-[#1A1008] hover:text-[#C9A84C] transition-colors"
+                  className="text-lg tracking-widest uppercase text-[#1A1008] hover:text-[#C9A84C] transition-colors"
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   onClick={() => setMenuOpen(false)}
                 >
@@ -125,6 +133,16 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/checkout"
+                className="text-lg tracking-widest uppercase text-[#1A1008] hover:text-[#C9A84C] transition-colors"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                onClick={() => setMenuOpen(false)}
+              >
+                Panier {count > 0 && `(${count})`}
+              </Link>
+            </li>
           </ul>
         </div>
       )}
