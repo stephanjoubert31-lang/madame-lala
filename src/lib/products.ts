@@ -40,6 +40,21 @@ export const products: Product[] = [
     ],
   },
   {
+    id: 4,
+    name: "Le Tote Raphia",
+    price: 245,
+    description: "Grand tote en raphia naturel tressé à la main",
+    slug: "le-tote-raphia",
+    color: "#6B4226",
+    details: [
+      "Dimensions : 40 × 38 × 15 cm",
+      "Raphia naturel tressé double épaisseur",
+      "Poches intérieures zippées",
+      "Anses longues en cuir végétal",
+      "Fabriqué à Madagascar",
+    ],
+  },
+  {
     id: 3,
     name: "L'Ylang",
     price: 195,
