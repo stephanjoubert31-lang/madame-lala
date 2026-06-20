@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { products, getProductBySlug } from "@/lib/products";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import AddToCartButton from "@/components/ui/AddToCartButton";
+import ProductActions from "@/components/ui/ProductActions";
 
 export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
@@ -91,16 +91,7 @@ export default async function ProductPage({
               ))}
             </ul>
 
-            <div className="flex flex-col gap-3 mt-4">
-              <AddToCartButton product={product} />
-              <a
-                href="/checkout"
-                className="text-center py-4 border border-[#3D1F0D]/30 text-[#3D1F0D] text-sm tracking-[0.25em] uppercase hover:bg-[#3D1F0D] hover:text-[#FAF7F0] transition-all duration-300"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Acheter maintenant
-              </a>
-            </div>
+            <ProductActions product={product} />
 
             <p
               className="text-[#1A1008]/40 text-xs tracking-wider mt-2"

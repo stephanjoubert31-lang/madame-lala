@@ -15,7 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { count } = useCart();
+  const { count, openDrawer } = useCart();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -87,7 +87,11 @@ export default function Navbar() {
 
         {/* Right icons */}
         <div className="flex items-center gap-4">
-          <Link href="/checkout" aria-label="Panier" className="relative">
+          <button
+            onClick={openDrawer}
+            aria-label="Ouvrir le panier"
+            className="relative"
+          >
             <ShoppingBag
               size={22}
               className={`transition-colors hover:text-[#C9A84C] ${
@@ -102,7 +106,7 @@ export default function Navbar() {
                 {count > 9 ? "9+" : count}
               </span>
             )}
-          </Link>
+          </button>
           <button
             className="md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
