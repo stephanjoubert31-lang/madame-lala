@@ -7,6 +7,7 @@ import { getProductBySlug, getSuggestedProducts, getAllProductSlugs } from "@/sa
 import { urlFor } from "@/sanity/lib/image";
 import { getProduct, getSuggested, products as localProducts } from "@/data/products";
 import ProductGallery from "@/components/sections/ProductGallery";
+import AddToCartButton from "@/components/ui/AddToCartButton";
 
 /* ── Génère les slugs statiques ──
    Toujours inclure les 4 slugs locaux comme base garantie,
@@ -241,12 +242,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               {/* CTA */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.28em", textTransform: "uppercase", backgroundColor: "#3D1F0D", color: "#FAF7F0", padding: "1rem 2rem", border: "none", cursor: "pointer", flex: 1 }}
-                  className="hover:bg-[#5c2e12] transition-colors duration-300"
-                >
-                  Ajouter au panier
-                </button>
+                <AddToCartButton productName={nom} prix={prix} />
                 <Link
                   href="/contact"
                   style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.28em", textTransform: "uppercase", backgroundColor: "transparent", color: "#3D1F0D", padding: "1rem 2rem", border: "1px solid #C9A84C", textDecoration: "none", textAlign: "center", flex: 1 }}
