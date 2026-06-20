@@ -1,25 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { addToCart } from "@/lib/cart";
 
 interface AddToCartButtonProps {
+  slug: string;
   productName: string;
   prix: number | null;
+  photo?: string;
 }
 
-export default function AddToCartButton({ productName, prix }: AddToCartButtonProps) {
-  const [added, setAdded] = useState(false);
-  const router = useRouter();
+export default function AddToCartButton({ slug, productName, prix, photo }: AddToCartButtonProps) {
+  const [state, setState] = useState<"idle" | "added">("idle");
 
   const handleClick = () => {
     if (!prix) {
-      // Pas de prix → rediriger vers contact
-      router.push("/contact");
+      window.location.href = "/contact";
       return;
     }
-    setAdded(true);
-    router.push("/panier");
+    addToCart({ slug, nom: productName, prix, photo });
+    setState("added");
   };
 
   return (
@@ -30,7 +30,7 @@ export default function AddToCartButton({ productName, prix }: AddToCartButtonPr
         fontSize: "0.78rem",
         letterSpacing: "0.28em",
         textTransform: "uppercase",
-        backgroundColor: added ? "#5c2e12" : "#3D1F0D",
+        backgroundColor: state === "added" ? "#5c6b2e" : "#3D1F0D",
         color: "#FAF7F0",
         padding: "1rem 2rem",
         border: "none",
@@ -39,7 +39,11 @@ export default function AddToCartButton({ productName, prix }: AddToCartButtonPr
         transition: "background-color 0.3s",
       }}
     >
-      {prix ? (added ? "Ajouté ✓" : "Ajouter au panier") : "Demander le prix"}
+      {!prix
+        ? "Demander le prix"
+        : state === "added"
+        ? "Ajouté au panier ✓"
+        : "Ajouter au panier"}
     </button>
   );
 }

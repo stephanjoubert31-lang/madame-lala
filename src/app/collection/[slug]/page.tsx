@@ -242,7 +242,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
               {/* CTA */}
               <div className="flex flex-col sm:flex-row gap-3">
-                <AddToCartButton productName={nom} prix={prix} />
+                <AddToCartButton
+                  slug={slug}
+                  productName={nom}
+                  prix={prix}
+                  photo={photos[0] ? urlFor(photos[0]).width(400).height(500).url() : undefined}
+                />
                 <Link
                   href="/contact"
                   style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.28em", textTransform: "uppercase", backgroundColor: "transparent", color: "#3D1F0D", padding: "1rem 2rem", border: "1px solid #C9A84C", textDecoration: "none", textAlign: "center", flex: 1 }}
