@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag } from "lucide-react";
 import { InstagramIcon, INSTAGRAM_URL } from "@/components/ui/InstagramIcon";
+import { useCartCount } from "@/hooks/useCartCount";
 
 const navLinks = [
   { label: "Collection", href: "/collection" },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const cartCount = useCartCount();
 
   // Mode sombre uniquement sur la page d'accueil non scrollée
   const isDark = pathname === "/" && !scrolled;
@@ -104,12 +106,20 @@ export default function Navbar() {
           >
             <InstagramIcon size={20} color="#C9A84C" />
           </a>
-          <Link href="/panier" aria-label="Panier">
+          <Link href="/panier" aria-label="Panier" className="relative">
             <ShoppingBag
               size={22}
               style={{ color: isDark ? "#FAF7F0" : "#3D1F0D", transition: "color 0.3s" }}
               className="hover:text-[#C9A84C] transition-colors"
             />
+            {cartCount > 0 && (
+              <span
+                className="absolute -top-1.5 -right-1.5 flex items-center justify-center"
+                style={{ width: 16, height: 16, borderRadius: "50%", backgroundColor: "#C9A84C", color: "#fff", fontSize: "0.55rem", fontWeight: 700, lineHeight: 1, fontFamily: "sans-serif" }}
+              >
+                {cartCount > 9 ? "9+" : cartCount}
+              </span>
+            )}
           </Link>
           <button
             className="md:hidden"

@@ -44,6 +44,15 @@ export async function getProductBySlug(slug: string): Promise<SanityProduct | nu
   );
 }
 
+export async function getFeaturedProducts(): Promise<SanityProduct[]> {
+  guardSanity();
+  return sanityClient.fetch(
+    `*[_type == "produit" && disponible == true && mettre_en_avant == true] | order(_createdAt asc) {
+      _id, nom, slug, description, prix, stock, photos, matieres, disponible
+    }`
+  );
+}
+
 export async function getSuggestedProducts(excludeId: string): Promise<SanityProduct[]> {
   guardSanity();
   return sanityClient.fetch(

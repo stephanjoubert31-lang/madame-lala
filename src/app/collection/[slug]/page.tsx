@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { getProductBySlug, getSuggestedProducts, getAllProductSlugs } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { getProduct, getSuggested, products as localProducts } from "@/data/products";
-import ProductGallery from "@/components/sections/ProductGallery";
+import ProductGallery, { RealGallery } from "@/components/sections/ProductGallery";
 import AddToCartButton from "@/components/ui/AddToCartButton";
 
 /* ── Génère les slugs statiques ──
@@ -128,35 +128,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             {/* ── Galerie ── */}
             {photos.length > 0 ? (
-              <div className="flex flex-col gap-4">
-                {/* Photo principale */}
-                <div className="aspect-[4/5] relative overflow-hidden" style={{ backgroundColor: "#EDE8DF" }}>
-                  <Image
-                    src={urlFor(photos[0]).width(800).height(1000).url()}
-                    alt={photos[0].alt ?? nom}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                </div>
-                {/* Vignettes */}
-                {photos.length > 1 && (
-                  <div className="grid grid-cols-4 gap-3">
-                    {photos.slice(0, 4).map((photo, i) => (
-                      <div key={i} className="aspect-square relative overflow-hidden" style={{ backgroundColor: "#EDE8DF", border: "1px solid #D4C9B5" }}>
-                        <Image
-                          src={urlFor(photo).width(200).height(200).url()}
-                          alt={photo.alt ?? `${nom} ${i + 1}`}
-                          fill
-                          className="object-cover"
-                          sizes="25vw"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <RealGallery
+                name={nom}
+                photos={photos.map((p: { alt?: string }) => ({
+                  url: urlFor(p).width(900).height(1125).url(),
+                  alt: (p as { alt?: string }).alt,
+                }))}
+              />
             ) : (
               <ProductGallery name={nom} />
             )}
@@ -196,7 +174,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 </p>
                 {stock > 0 && stock <= 3 && (
                   <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.65rem", letterSpacing: "0.2em", color: "#C9A84C", border: "1px solid #C9A84C", padding: "3px 8px", textTransform: "uppercase" }}>
-                    Dernières pièces — {stock} disponible{stock > 1 ? "s" : ""}
+                    Dernières pièces
+                  </span>
+                )}
+                {stock === 0 && (
+                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.65rem", letterSpacing: "0.2em", color: "#c0392b", border: "1px solid #c0392b", padding: "3px 8px", textTransform: "uppercase" }}>
+                    Rupture de stock
                   </span>
                 )}
               </div>
@@ -246,6 +229,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   slug={slug}
                   productName={nom}
                   prix={prix}
+                  stock={stock}
                   photo={photos[0] ? urlFor(photos[0]).width(400).height(500).url() : undefined}
                 />
                 <Link

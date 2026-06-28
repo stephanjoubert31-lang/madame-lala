@@ -7,6 +7,10 @@ export interface CartItem {
 
 const KEY = "madamelala_cart";
 
+function emit() {
+  if (typeof window !== "undefined") window.dispatchEvent(new Event("cart-updated"));
+}
+
 export function getCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
@@ -21,13 +25,16 @@ export function addToCart(item: CartItem) {
   const exists = cart.find((c) => c.slug === item.slug);
   if (!exists) cart.push(item);
   localStorage.setItem(KEY, JSON.stringify(cart));
+  emit();
 }
 
 export function removeFromCart(slug: string) {
   const cart = getCart().filter((c) => c.slug !== slug);
   localStorage.setItem(KEY, JSON.stringify(cart));
+  emit();
 }
 
 export function clearCart() {
   localStorage.removeItem(KEY);
+  emit();
 }

@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { items } = await req.json();
+    const { items, customer } = await req.json();
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "Panier vide" }, { status: 400 });
@@ -19,6 +19,17 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       mode: "payment",
       locale: "fr",
+      customer_email: customer?.email,
+      shipping_address_collection: undefined,
+      metadata: customer ? {
+        prenom: customer.prenom ?? "",
+        nom: customer.nom ?? "",
+        telephone: customer.telephone ?? "",
+        adresse: customer.adresse ?? "",
+        ville: customer.ville ?? "",
+        codePostal: customer.codePostal ?? "",
+        pays: customer.pays ?? "",
+      } : {},
       line_items: items.map((item: { nom: string; prix: number; photo?: string }) => ({
         price_data: {
           currency: "eur",

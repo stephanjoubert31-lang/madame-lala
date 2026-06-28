@@ -8,8 +8,6 @@ import { getCart, removeFromCart, CartItem } from "@/lib/cart";
 export default function CartView() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setItems(getCart());
@@ -23,24 +21,8 @@ export default function CartView() {
 
   const total = items.reduce((sum, i) => sum + (i.prix ?? 0), 0);
 
-  const handleCheckout = async () => {
-    const payableItems = items.filter((i) => i.prix);
-    if (payableItems.length === 0) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: payableItems }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Erreur serveur");
-      window.location.href = data.url;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur inconnue");
-      setLoading(false);
-    }
+  const handleCheckout = () => {
+    window.location.href = "/checkout";
   };
 
   if (!ready) return null;
@@ -171,21 +153,14 @@ export default function CartView() {
           </div>
         )}
 
-        {error && (
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#b00", textAlign: "center" }}>
-            {error}
-          </p>
-        )}
-
         <div className="flex flex-col sm:flex-row gap-3">
           {total > 0 ? (
             <button
               onClick={handleCheckout}
-              disabled={loading}
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.28em", textTransform: "uppercase", backgroundColor: loading ? "#8a6a3a" : "#3D1F0D", color: "#FAF7F0", padding: "1rem 2rem", border: "none", cursor: loading ? "wait" : "pointer", flex: 1, transition: "background-color 0.3s" }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.28em", textTransform: "uppercase", backgroundColor: "#3D1F0D", color: "#FAF7F0", padding: "1rem 2rem", border: "none", cursor: "pointer", flex: 1, transition: "background-color 0.3s" }}
               className="hover:bg-[#5c2e12]"
             >
-              {loading ? "Redirection…" : "Procéder au paiement"}
+              Finaliser la commande →
             </button>
           ) : (
             <Link

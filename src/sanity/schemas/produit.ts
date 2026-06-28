@@ -67,6 +67,12 @@ export const produitSchema = defineType({
       type: "boolean",
       initialValue: true,
     }),
+    defineField({
+      name: "mettre_en_avant",
+      title: "Mettre en avant sur l'accueil",
+      type: "boolean",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
