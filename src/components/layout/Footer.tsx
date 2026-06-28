@@ -20,15 +20,19 @@ export default function Footer() {
             >
               Sacs en raphia artisanal, tissés à Madagascar par des artisanes d&apos;exception.
             </p>
-            <div className="flex gap-4 mt-2">
+            <div className="mt-2">
               <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram Madame Lala"
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                className="inline-flex items-center gap-2 opacity-70 hover:opacity-100 transition-opacity"
+                style={{ textDecoration: "none" }}
               >
                 <InstagramIcon size={22} color="#C9A84C" />
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.9rem", color: "#C9A84C", letterSpacing: "0.05em" }}>
+                  @madamelala_raphia
+                </span>
               </a>
             </div>
           </div>

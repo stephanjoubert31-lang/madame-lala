@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "MADAME LALA — Sacs en raphia artisanal de Madagascar",
   description: "Sacs à main haut de gamme en raphia artisanal, fabriqués à Madagascar. Luxe authentique franco-malgache.",
   keywords: "sac raphia, Madagascar, artisanal, luxe, sac main, MADAME LALA",
+  icons: { icon: "/LOGOMADAMELALA.PNG" },
 };
 
 export default function RootLayout({
