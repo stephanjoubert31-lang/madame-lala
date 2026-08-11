@@ -20,8 +20,11 @@ export default function Navbar() {
   const pathname = usePathname();
   const cartCount = useCartCount();
 
-  // Mode sombre uniquement sur la page d'accueil non scrollée
-  const isDark = pathname === "/" && !scrolled;
+  // L'accueil est une expérience sombre de bout en bout : la navbar y reste
+  // sombre (transparente en haut, verre brun une fois scrollée).
+  // Les autres pages gardent la barre crème.
+  const isHome = pathname === "/";
+  const isDark = isHome;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -29,13 +32,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const headerClass = isHome
+    ? scrolled
+      ? "bg-[#2C1005]/90 backdrop-blur-md border-b border-[#C9A84C]/15"
+      : "bg-transparent"
+    : "bg-[#FAF7F0]/95 backdrop-blur-sm border-b border-[#3D1F0D]/10 shadow-sm";
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isDark
-          ? "bg-transparent"
-          : "bg-[#FAF7F0]/95 backdrop-blur-sm border-b border-[#3D1F0D]/10 shadow-sm"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerClass}`}
     >
       <nav className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between h-20">
         {/* Logo texte + signature */}
@@ -134,13 +139,21 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#FAF7F0] border-t border-[#3D1F0D]/10 px-6 py-8">
+        <div
+          className={`md:hidden px-6 py-8 ${
+            isDark
+              ? "bg-[#2C1005]/95 backdrop-blur-md border-t border-[#C9A84C]/15"
+              : "bg-[#FAF7F0] border-t border-[#3D1F0D]/10"
+          }`}
+        >
           <ul className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="font-garamond text-lg tracking-widest uppercase text-[#1A1008] hover:text-[#C9A84C] transition-colors"
+                  className={`font-garamond text-lg tracking-widest uppercase hover:text-[#C9A84C] transition-colors ${
+                    isDark ? "text-[#FAF7F0]" : "text-[#1A1008]"
+                  }`}
                   style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   onClick={() => setMenuOpen(false)}
                 >

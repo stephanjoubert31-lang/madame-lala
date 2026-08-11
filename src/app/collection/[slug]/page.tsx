@@ -8,6 +8,8 @@ import { urlFor } from "@/sanity/lib/image";
 import { getProduct, getSuggested, products as localProducts } from "@/data/products";
 import ProductGallery, { RealGallery } from "@/components/sections/ProductGallery";
 import AddToCartButton from "@/components/ui/AddToCartButton";
+import Reveal from "@/components/ui/Reveal";
+import Cursor from "@/components/ui/Cursor";
 
 /* ── Génère les slugs statiques ──
    Toujours inclure les 4 slugs locaux comme base garantie,
@@ -108,6 +110,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
+      <Cursor />
       <Navbar />
       <main className="min-h-screen bg-[#FAF7F0]">
         <section className="max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-20">
@@ -151,7 +154,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.72rem", letterSpacing: "0.2em", color: "#3D1F0D", textTransform: "uppercase" }}>{nom}</span>
               </nav>
 
-              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", fontWeight: 400, color: "#3D1F0D", letterSpacing: "0.05em", lineHeight: 1.2 }}>
+              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.2rem, 4vw, 3.4rem)", fontWeight: 300, color: "#3D1F0D", letterSpacing: "0.04em", lineHeight: 1.1, textTransform: "uppercase" }}>
                 {nom}
               </h1>
 
@@ -247,17 +250,21 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         {/* Vous aimerez aussi */}
         <section className="border-t border-[#3D1F0D]/10 py-20 px-6 md:px-10 bg-[#FAF7F0]">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12 flex flex-col items-center gap-4">
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.65rem", letterSpacing: "0.45em", color: "#C9A84C", textTransform: "uppercase" }}>À découvrir</p>
-              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2rem", fontWeight: 400, color: "#3D1F0D" }}>Vous aimerez aussi</h2>
-              <div style={{ width: "40px", height: "1px", backgroundColor: "#C9A84C" }} />
-            </div>
+            <Reveal>
+              <div className="text-center mb-12 flex flex-col items-center gap-4">
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.65rem", letterSpacing: "0.45em", color: "#C9A84C", textTransform: "uppercase" }}>À découvrir</p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#3D1F0D", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                  Vous aimerez <span style={{ color: "transparent", WebkitTextStroke: "1px rgba(201,168,76,0.7)" }}>aussi</span>
+                </h2>
+                <div style={{ width: "40px", height: "1px", backgroundColor: "#C9A84C" }} />
+              </div>
+            </Reveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
               {suggestedItems.map((s) => (
                 <Link key={s.slug} href={`/collection/${s.slug}`} style={{ textDecoration: "none" }} className="group flex flex-col gap-4">
                   <div className="aspect-[4/5] relative overflow-hidden flex items-center justify-center" style={{ backgroundColor: "#EDE8DF", border: "1px solid #D4C9B5" }}>
                     {s.photos?.[0] ? (
-                      <Image src={urlFor(s.photos[0]).width(400).height(500).url()} alt={s.nom} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
+                      <Image src={urlFor(s.photos[0]).width(400).height(500).url()} alt={s.nom} fill className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]" sizes="(max-width: 640px) 100vw, 33vw" />
                     ) : null}
                   </div>
                   <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", fontWeight: 400, color: "#1A1008", letterSpacing: "0.04em" }} className="group-hover:text-[#C9A84C] transition-colors duration-300">{s.nom}</h3>

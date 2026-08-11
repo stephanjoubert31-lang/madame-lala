@@ -6,7 +6,13 @@ import { SanityProduct } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import AddToCartButton from "@/components/ui/AddToCartButton";
 
-export default function ProductCard({ product }: { product: SanityProduct }) {
+export default function ProductCard({
+  product,
+  index,
+}: {
+  product: SanityProduct;
+  index?: number;
+}) {
   const href = `/collection/${product.slug.current}`;
   const photo = product.photos?.[0];
   const photoUrl = photo ? urlFor(photo).width(600).height(750).url() : undefined;
@@ -26,7 +32,7 @@ export default function ProductCard({ product }: { product: SanityProduct }) {
                 src={photoUrl}
                 alt={photo?.alt ?? product.nom}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
                 sizes="(max-width: 640px) 100vw, 50vw"
               />
             ) : (
@@ -41,6 +47,16 @@ export default function ProductCard({ product }: { product: SanityProduct }) {
             )}
 
             <div className="absolute inset-0 bg-[#3D1F0D]/0 group-hover:bg-[#3D1F0D]/5 transition-colors duration-500" />
+
+            {/* Numéro de pièce */}
+            {typeof index === "number" && (
+              <span
+                className="absolute top-3 right-4"
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.78rem", letterSpacing: "0.3em", color: "rgba(61,31,13,0.45)" }}
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            )}
 
             {/* Badge rupture */}
             {product.stock === 0 && (
@@ -88,7 +104,8 @@ export default function ProductCard({ product }: { product: SanityProduct }) {
           </span>
           <Link
             href={href}
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#3D1F0D", borderBottom: "1px solid #C9A84C", paddingBottom: "2px", textDecoration: "none" }}
+            className="link-sweep"
+            style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.75rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#3D1F0D", textDecoration: "none" }}
           >
             Découvrir
           </Link>
